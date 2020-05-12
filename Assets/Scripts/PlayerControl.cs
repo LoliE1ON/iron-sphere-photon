@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
@@ -22,9 +24,7 @@ public class PlayerControl : MonoBehaviour {
     // Photon
     private PhotonView view;
     
-    public bool IsGrounded() {
-        return Physics.Raycast(this.transform.position, -Vector3.up, 0.65f);
-    }
+    private LensDistortion lensDistortion;
     
     public void Start()
     {
@@ -34,6 +34,16 @@ public class PlayerControl : MonoBehaviour {
         this.view = GetComponent<PhotonView>();
 
         this.userName.text = this.view.Owner.NickName;
+        
+        // Get Lens distortion
+        GameObject pp = GameObject.Find("Post Process Volume");
+        if (pp) {
+            LensDistortion tmp;
+            pp.GetComponent<Volume>().profile.TryGet<LensDistortion>(out tmp);
+            this.lensDistortion = tmp;
+        }
+        
+
     }
     
     public void FixedUpdate()
@@ -44,7 +54,17 @@ public class PlayerControl : MonoBehaviour {
         
         if (this.view.IsMine)
         {
+            
+            // Max speed
+            if(this.rigidBody.velocity.magnitude > 20) {
+                this.rigidBody.velocity = this.rigidBody.velocity.normalized * 20;
+            }
+            
+            // Lens distortion
+            this.lensDistortion.intensity.value = -this.rigidBody.velocity.magnitude / 35;
+            
 
+            
             // Define directions
             this.keyMappings = new Dictionary<KeyCode, Vector3>()
             {
@@ -70,7 +90,6 @@ public class PlayerControl : MonoBehaviour {
             {
                 if (Input.GetKey(keyMapping.Key) && this.IsGrounded())
                 {
-
                     Vector3 objectForce = keyMapping.Value * force;
                     this.rigidBody.drag = objectForce.sqrMagnitude / drag;
                     this.rigidBody.AddForce(objectForce);
@@ -81,6 +100,10 @@ public class PlayerControl : MonoBehaviour {
 
 
 
+    }
+    
+    public bool IsGrounded() {
+        return Physics.Raycast(this.transform.position, -Vector3.up, 0.65f);
     }
     
 }
