@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 5961366373163942280}
   - component: {fileID: 5961366373163942281}
   - component: {fileID: 5961366373163942284}
+  - component: {fileID: 8354181916836221569}
   - component: {fileID: 782886872850529941}
   - component: {fileID: 8767811718815802748}
   - component: {fileID: 7026465268414034914}
@@ -204,6 +205,21 @@ MonoBehaviour:
   dragDividend: 100
   ui: {fileID: 5961366373286270813}
   userName: {fileID: 5961366373994408856}
+--- !u!114 &8354181916836221569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5961366373163942282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409eae461694443791f69ca3abe910b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterMaterials:
+  - {fileID: 2100000, guid: 49cf5bebbfbfda24d822c9fdb63ad3b3, type: 2}
+  - {fileID: 2100000, guid: 078abc0bcf137b8449086f3c8ac3d4e2, type: 2}
 --- !u!114 &782886872850529941
 MonoBehaviour:
   m_ObjectHideFlags: 0

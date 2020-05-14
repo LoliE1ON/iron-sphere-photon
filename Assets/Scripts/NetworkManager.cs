@@ -24,12 +24,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     public override void OnPlayerEnteredRoom(Player newPlayer) {
         this.playerUi.refreshPlayers();
         this.eventManager.appendPlayerLog("<b>" + newPlayer.NickName +"</b> entered room");
-        Debug.LogFormat("Player {0} entered room", newPlayer.NickName);
+        Debug.LogFormat("Player {0} entered room. Character: " + (newPlayer.CustomProperties["character"].ToString()), newPlayer.NickName);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer) {
         this.playerUi.refreshPlayers();
-        this.eventManager.appendPlayerLog("<b>" + otherPlayer.NickName +"</b> left room");
+        this.eventManager.appendPlayerLog("<b>" + otherPlayer.NickName +"</b> left room.");
         Debug.LogFormat("Player {0} left room", otherPlayer.NickName);
     }
 }

@@ -27,8 +27,7 @@ public class PlayerUI : MonoBehaviourPunCallbacks {
     private string generateListPlayers(Dictionary<int, Player> players) {
         
         string playersStr = "";
-        foreach (KeyValuePair<int,Player> player in players)
-        {
+        foreach (KeyValuePair<int,Player> player in players) {
             playersStr += "\n" + player.Value.NickName;
             if (player.Value.IsMasterClient) playersStr += " [MASTER]";
         }

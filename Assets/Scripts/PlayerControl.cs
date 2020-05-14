@@ -42,10 +42,9 @@ public class PlayerControl : MonoBehaviour {
             pp.GetComponent<Volume>().profile.TryGet<LensDistortion>(out tmp);
             this.lensDistortion = tmp;
         }
-        
 
     }
-    
+
     public void FixedUpdate()
     {
 
@@ -62,7 +61,15 @@ public class PlayerControl : MonoBehaviour {
             
             // Lens distortion
             this.lensDistortion.intensity.value = -this.rigidBody.velocity.magnitude / 35;
-            
+
+            float drag, force;
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                drag = this.dragDividend * 8;
+                force = this.accelerationForce * 2;
+            } else {
+                drag = this.dragDividend;
+                force = this.accelerationForce;
+            }
 
             
             // Define directions
@@ -74,16 +81,6 @@ public class PlayerControl : MonoBehaviour {
                 {KeyCode.D, camera.transform.TransformDirection(new Vector3(1, 0, 0))},
 
             };
-            
-            float drag, force;
-            if (Input.GetKey(KeyCode.LeftShift)) {
-                drag = this.dragDividend * 8;
-                force = this.accelerationForce * 2;
-            } else {
-                drag = this.dragDividend;
-                force = this.accelerationForce;
-            }
-
             
             // Control
             foreach (KeyValuePair<KeyCode, Vector3> keyMapping in this.keyMappings)

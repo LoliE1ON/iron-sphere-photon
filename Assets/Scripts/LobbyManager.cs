@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class LobbyManager : MonoBehaviourPunCallbacks {
 
@@ -12,6 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     public Text helloText;
     public GameObject intancesListContainer;
     public GameObject instanceUiPrefab;
+    public Dropdown character;
     
     // Tabs
     public GameObject selectUsername;
@@ -22,6 +25,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         PhotonNetwork.NickName = this.nickName.text;
         PhotonNetwork.GameVersion = "1";
         PhotonNetwork.AutomaticallySyncScene = true;
+        
+        // Set custom props
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+        customProperties.Add("character", this.character.value);
+        PhotonNetwork.SetPlayerCustomProperties(customProperties);
         
         PhotonNetwork.ConnectUsingSettings();
         this.Log("Connection to Photon Server...");
@@ -53,7 +61,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     public override void OnConnectedToMaster() {
         
         PhotonNetwork.JoinLobby();
-        
+
         // Switch tabs
         this.selectUsername.SetActive(false);
         this.lobby.SetActive(true);
