@@ -48,20 +48,9 @@ public class PlayerControl : MonoBehaviour {
     public void FixedUpdate()
     {
 
-        this.ui.position = new Vector3(this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z);
-        this.ui.LookAt(new Vector3(this.camera.transform.position.x, this.transform.position.y ,this.camera.transform.position.z));
-        
         if (this.view.IsMine)
         {
             
-            // Max speed
-            if(this.rigidBody.velocity.magnitude > 20) {
-                this.rigidBody.velocity = this.rigidBody.velocity.normalized * 20;
-            }
-            
-            // Lens distortion
-            this.lensDistortion.intensity.value = -this.rigidBody.velocity.magnitude / 35;
-
             float drag, force;
             if (Input.GetKey(KeyCode.LeftShift)) {
                 drag = this.dragDividend * 8;
@@ -70,7 +59,6 @@ public class PlayerControl : MonoBehaviour {
                 drag = this.dragDividend;
                 force = this.accelerationForce;
             }
-
             
             // Define directions
             this.keyMappings = new Dictionary<KeyCode, Vector3>()
@@ -93,6 +81,17 @@ public class PlayerControl : MonoBehaviour {
                 }
             }
             
+            // Max speed
+            if(this.rigidBody.velocity.magnitude > 20) {
+                this.rigidBody.velocity = this.rigidBody.velocity.normalized * 20;
+            }
+            
+            // Lens distortion
+            this.lensDistortion.intensity.value = -this.rigidBody.velocity.magnitude / 35;
+            
+            this.ui.position = new Vector3(this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z);
+            this.ui.LookAt(new Vector3(this.camera.transform.position.x, this.transform.position.y ,this.camera.transform.position.z));
+
         }
 
 

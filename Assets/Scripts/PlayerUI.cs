@@ -10,9 +10,24 @@ public class PlayerUI : MonoBehaviourPunCallbacks {
 
     public Text totalPlayers;
     public Text listPlayers;
-
+    
+    // Fps counter
+    public Text fpsCounter;
+    private float hudRefreshRate = 1f;
+    private float timer;
+    
     private void Start() {
         this.refreshPlayers();
+    }
+
+    private void Update() {
+        
+        // FPS
+        if (Time.unscaledTime > this.timer) {
+            int fps = (int)(1f / Time.unscaledDeltaTime);
+            this.fpsCounter.text = fps.ToString();
+            this.timer = Time.unscaledTime + this.hudRefreshRate;
+        }
     }
 
     public void refreshPlayers() {
